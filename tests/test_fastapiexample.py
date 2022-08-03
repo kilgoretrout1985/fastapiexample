@@ -1,8 +1,14 @@
-# import pytest
+from __future__ import annotations
 
-# from fastapiexample import square
+import pytest
+from httpx import AsyncClient
+
+from fastapiexample.main import app
 
 
-def test_main():
-    assert 2**2 == 4
-    assert 42 != 1
+@pytest.mark.anyio
+async def test_root():
+    async with AsyncClient(app=app, base_url="http://test") as ac:
+        response = await ac.get("/")
+    assert response.status_code == 200
+    assert response.json() == {"message": "Hello World"}
