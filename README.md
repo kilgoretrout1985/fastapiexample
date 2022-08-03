@@ -5,12 +5,12 @@
 python3 -m venv .env && \
 source .env/bin/activate && \
 pip install -U pip && \
-pip install -r requirements.txt
+pip install -e .
 ```
 
 2) * For development you can also run:
 ```
-pip install -r requirements_dev.txt && \
+pip install -e .[testing] && \
 tox
 ```
 
