@@ -1,5 +1,10 @@
-# import pytest
+import pytest
+from httpx import AsyncClient
+
+from fastapiexample.main import app
 
 
-# here you can create fixtures for pytest and by convention this fixtures
-# will be available to all pytests in tests/ dir.
+@ pytest.fixture
+async def async_client():
+    async with AsyncClient(app=app, base_url="http://test") as ac:
+        yield ac
