@@ -19,3 +19,6 @@ async def test_read_item(async_client):
     response = await async_client.get("/items/0")
     assert response.status_code == 200
     assert response.json() == {"item_id": 0}
+
+    response = await async_client.get("/items/IAmAStringThatWillFail")
+    assert response.status_code == 422
