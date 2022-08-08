@@ -45,3 +45,18 @@ async def test_create_item(async_client):
 
     response = await async_client.post("/items/", json={"name": "not enought fields posted"})
     assert response.status_code == 422
+
+
+@pytest.mark.anyio
+async def test_update_item(async_client):
+    response = await async_client.put("/items/42")
+    assert response.status_code == 200
+    assert 'item_id' in response.json()
+    assert response.json()['item_id'] == 42
+
+    request_data = {'name': 'test', 'price': 55.5}
+    response = await async_client.put("/items/42", json=request_data)
+    assert response.status_code == 200
+    response_data = response.json()
+    assert 'item' in response_data
+    assert dict(response_data['item'], **request_data) == response_data['item']
