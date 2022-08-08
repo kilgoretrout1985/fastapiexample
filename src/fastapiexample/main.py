@@ -1,5 +1,8 @@
 from __future__ import annotations
+
 from fastapi import FastAPI
+
+from fastapiexample.models import Item
 
 
 app = FastAPI()
@@ -13,3 +16,8 @@ async def root() -> dict[str, str]:
 @app.get("/items/{item_id}")
 async def read_item(item_id: int):
     return {"item_id": item_id}
+
+
+@app.post("/items/")
+async def create_item(item: Item):
+    return item
