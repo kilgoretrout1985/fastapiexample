@@ -17,8 +17,7 @@ async def test_read_item(async_client):
     assert response.json() == {"item_id": 42}
 
     response = await async_client.get("/items/0")
-    assert response.status_code == 200
-    assert response.json() == {"item_id": 0}
+    assert response.status_code == 422
 
     response = await async_client.get("/items/IAmAStringThatWillFail")
     assert response.status_code == 422
@@ -26,6 +25,10 @@ async def test_read_item(async_client):
 
 @pytest.mark.anyio
 async def test_create_item(async_client):
+    # get is not allowed on creation
+    response = await async_client.get("/items/")
+    assert response.status_code == 405
+
     request_data_1 = {"name": "Lol", "price": 42.1}
     response = await async_client.post("/items/", json=request_data_1)
     assert response.status_code == 200
