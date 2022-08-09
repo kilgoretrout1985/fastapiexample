@@ -15,12 +15,12 @@ async def root() -> dict[str, str]:
     return {"message": "Hello World"}
 
 
-@app.get("/items/{item_id}")
+@app.get("/items/{item_id}", tags=['items'])
 async def read_item(item_id: int = Path(ge=1)):
     return {"item_id": item_id}
 
 
-@app.put("/items/{item_id}")
+@app.put("/items/{item_id}", tags=['items'])
 async def update_item(item_id: int = Path(ge=1), item: Union[Item, None] = None) -> dict[str, Any]:
     results: dict[str, Any] = {"item_id": item_id}
     if item:
@@ -28,6 +28,6 @@ async def update_item(item_id: int = Path(ge=1), item: Union[Item, None] = None)
     return results
 
 
-@app.post("/items/")
+@app.post("/items/", tags=['items'])
 async def create_item(item: Item):
     return item
