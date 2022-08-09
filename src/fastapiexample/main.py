@@ -30,4 +30,12 @@ async def update_item(item_id: int = Path(ge=1), item: Union[Item, None] = None)
 
 @app.post("/items/", tags=['items'])
 async def create_item(item: Item):
+    """
+    Create an item with all the information:
+
+    - **name**: each item must have a name
+    - **description**: a long description
+    - **price**: required
+    - **tax**: if the item doesn't have tax, you can omit this
+    """
     return item
