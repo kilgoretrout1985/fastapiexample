@@ -5,9 +5,12 @@ from typing import Any, Union
 from fastapi import FastAPI, Path
 
 from fastapiexample.models import Item
+from fastapiexample.middleware import add_custom_header_middleware
 
 
 app = FastAPI()
+
+app.middleware("http")(add_custom_header_middleware)
 
 
 @app.get("/")
