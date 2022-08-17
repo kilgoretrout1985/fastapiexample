@@ -1,22 +1,26 @@
-from __future__ import annotations
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
+from sqlalchemy.orm import relationship
 
-from typing import Union
-
-from pydantic import BaseModel, Field
+from fastapiexample.database import Base
 
 
-class Item(BaseModel):
-    name: str
-    description: Union[str, None] = Field(default=None, title="Description of the item.", max_length=128)
-    price: float = Field(gt=0, description="Price must be greater than zero.")
-    tax: Union[float, None] = Field(ge=0)  # can be either null or non-negative
+class User(Base):
+    __tablename__ = "users"
 
-    class Config:
-        schema_extra = {
-            "example": {
-                "name": "Nail",
-                "description": "Also buy a hummer for your nails.",
-                "price": 0.8,
-                "tax": 0.01,
-            }
-        }
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String, unique=True, index=True)
+    hashed_password = Column(String)
+    is_active = Column(Boolean, default=True)
+
+    items = relationship("Item", back_populates="owner")
+
+
+class Item(Base):
+    __tablename__ = "items"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String, index=True)
+    description = Column(String, index=True)
+    owner_id = Column(Integer, ForeignKey("users.id"))
+
+    owner = relationship("User", back_populates="items")
