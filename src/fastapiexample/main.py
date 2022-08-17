@@ -6,11 +6,11 @@ from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from fastapiexample.middleware import add_custom_header_middleware
-from fastapiexample import crud, models, schemas
-from fastapiexample.database import engine, get_db
+from fastapiexample import crud, schemas
+from fastapiexample.database import engine, get_db, Base
 
 
-models.Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
 app = FastAPI()
 app.middleware("http")(add_custom_header_middleware)
 
