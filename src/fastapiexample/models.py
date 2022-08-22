@@ -14,6 +14,8 @@ class User(Base):
 
     items = relationship("Item", back_populates="owner")
 
+    __mapper_args__ = {"eager_defaults": True}
+
 
 class Item(Base):
     __tablename__ = "items"
