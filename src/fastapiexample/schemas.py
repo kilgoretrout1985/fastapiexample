@@ -1,6 +1,4 @@
-from __future__ import annotations
-
-from typing import Union
+from typing import Union, List
 
 from pydantic import BaseModel, Field
 
@@ -45,7 +43,7 @@ class User(UserBase):
     id: int
     is_active: bool
     # check me working
-    items: list[Item] = []
+    items: List[Item] = []
 
     class Config:
         orm_mode = True
