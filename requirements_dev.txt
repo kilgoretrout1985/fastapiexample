@@ -1,7 +1,8 @@
 flake8
 tox
+mypy
 pytest
 pytest-cov
-mypy
-httpx==0.23.0
-trio==0.21.0
+pytest-asyncio
+httpx
+trio
