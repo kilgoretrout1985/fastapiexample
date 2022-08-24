@@ -10,8 +10,9 @@
 
 2) For development you should also run:
     ```
-    pip install -e .[testing]
+    pip install -e .[testing] && tox
     ```
+    Everything should be green at this point.
 
 3) 
     ```
