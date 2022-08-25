@@ -1,5 +1,0 @@
-fastapi==0.79.0
-uvicorn==0.18.2
-sqlalchemy[asyncio]==1.4.40
-asyncpg==0.26.0
-typer==0.6.1

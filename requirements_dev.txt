@@ -1,7 +1,0 @@
-flake8
-tox
-mypy
-pytest
-pytest-cov
-pytest-asyncio
-httpx
