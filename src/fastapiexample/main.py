@@ -9,7 +9,10 @@ from fastapiexample.database import init_models
 from fastapiexample.routers import users, items
 
 
-app = FastAPI()
+app = FastAPI(
+    title="FastAPI example app",
+    description="Just a fastapi-framework example playground."
+)
 app.include_router(users.router)
 app.include_router(items.router)
 app.middleware("http")(add_custom_header_middleware)
