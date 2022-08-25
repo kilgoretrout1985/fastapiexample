@@ -10,7 +10,7 @@ from fastapiexample.database import get_db
 router = APIRouter(prefix="/users", tags=["users"])
 
 
-@router.post("/", response_model=schemas.User)
+@router.post("/", response_model=schemas.User, status_code=201)
 async def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     db_user = await crud.get_user_by_email(db, email=user.email)
     if db_user:
@@ -32,7 +32,7 @@ async def read_user(user_id: int, db: Session = Depends(get_db)):
     return db_user
 
 
-@router.post("/{user_id}/items/", response_model=schemas.Item, tags=["items"])
+@router.post("/{user_id}/items/", response_model=schemas.Item, tags=["items"], status_code=201)
 async def create_item_for_user(
     user_id: int, item: schemas.ItemCreate, db: Session = Depends(get_db)
 ):

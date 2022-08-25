@@ -24,7 +24,7 @@ async def test_root(async_client):
 async def test_create_user_ok(async_client):
     request_data = SAMPLE_DATA["sample_user"].copy()
     response = await async_client.post("/users/", json=request_data)
-    assert response.status_code == 200
+    assert response.status_code >= 200 and response.status_code < 300
     response_data = response.json()
     assert 'id' in response_data
     assert response_data['id'] > 0
@@ -93,8 +93,10 @@ async def test_create_user_item(async_client):
     assert user_id > 0
 
     post_url = f"/users/{user_id}/items/"
+
     response = await async_client.get(post_url)
     assert response.status_code == 405, "Get is not allowed to create an item"
+
     response = await async_client.post(post_url, json=request_item_data)
     response_data = response.json()
     assert response_data['owner_id'] == user_id
