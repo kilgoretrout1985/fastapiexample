@@ -2,6 +2,8 @@ import asyncio
 from typing import Dict
 
 from fastapi import FastAPI
+# from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 from typer import Typer
 
 from fastapiexample.middleware import add_custom_header_middleware
@@ -15,7 +17,11 @@ app = FastAPI(
 )
 app.include_router(users.router)
 app.include_router(items.router)
+
 app.middleware("http")(add_custom_header_middleware)
+# app.add_middleware(HTTPSRedirectMiddleware)
+app.add_middleware(GZipMiddleware)
+
 cli = Typer()
 
 
