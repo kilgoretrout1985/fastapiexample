@@ -9,12 +9,10 @@ from typer import Typer
 from fastapiexample.middleware import add_custom_header_middleware
 from fastapiexample.database import init_models
 from fastapiexample.routers import users, items
+from fastapiexample.config import settings
 
 
-app = FastAPI(
-    title="FastAPI example app",
-    description="Just a fastapi-framework example playground."
-)
+app = FastAPI(title=settings.app_title, description=settings.app_description)
 app.include_router(users.router)
 app.include_router(items.router)
 

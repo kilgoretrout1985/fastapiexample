@@ -4,15 +4,13 @@ from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
+from fastapiexample.config import settings
 
-DB_DSN = "postgresql+asyncpg://fastapiexamplepguser:pass@localhost/fastapiexample"
-do_echo_flag = True  # set True to see generated SQL queries in the console
-# different postgres db for test runs
-if 'pytest' in modules:
-    DB_DSN = "postgresql+asyncpg://fastapiexamplepguser:pass@localhost/fastapiexample_test"
-    do_echo_flag = False
 
-engine = create_async_engine(DB_DSN, echo=do_echo_flag)
+engine = create_async_engine(
+    settings.db_test_dsn if 'pytest' in modules else settings.db_dsn,
+    echo=settings.db_echo_flag
+)
 Base = declarative_base()
 
 async_session = sessionmaker(
